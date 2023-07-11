@@ -1,0 +1,341 @@
+#!/opt/homebrew/bin/python3
+import requests, json, sys 
+import urllib3
+import logging
+from scopslib import scops
+
+
+def main():
+    logging.basicConfig(
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
+    logging.root.setLevel(logging.INFO)
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+    scLogin = {
+        'url': 'https://localhost:8443/',
+        'username': 'secmanager',
+        'password': 'password'
+    }
+    sc=scops(scLogin)
+    payload = {
+    'tags': '',
+    'name': 'Turkcell - Perform Thorough Tests Enabled2',
+    'description': '',
+    'context': '',
+    'status': -1,
+    'createdTime': 0,
+    'modifiedTime': 0,
+    'groups': [],
+    'type': '',
+    'policyTemplate': {
+        'id': 1,
+    },
+    'auditFiles': [],
+    'preferences': {
+        'name': 'Turkcell - Perform Thorough Tests Enabled2',
+        'description': '',
+        'safe_checks': 'yes',
+        'stop_scan_on_disconnect': 'no',
+        'auto_accept_disclaimer': 'no',
+        'scan.allow_multi_target': 'no',
+        'host_tagging': 'yes',
+        'reduce_connections_on_congestion': 'no',
+        'network_receive_timeout': '5',
+        'max_checks_per_host': '5',
+        'max_hosts_per_scan': '30',
+        'max_simult_tcp_sessions_per_host': '',
+        'max_simult_tcp_sessions_per_scan': '',
+        'custom_find_filepath_exclusions': '',
+        'custom_find_filesystem_exclusions': '',
+        'custom_find_filepath_inclusions': '',
+        'windows_search_filepath_exclusions': '',
+        'windows_search_filepath_inclusions': '',
+        'always_report_ssh_cmds': 'no',
+        'enable_plugin_list': 'no',
+        'ping_the_remote_host': 'yes',
+        'test_local_nessus_host': 'yes',
+        'fast_network_discovery': 'no',
+        'arp_ping': 'yes',
+        'tcp_ping': 'yes',
+        'icmp_ping': 'yes',
+        'udp_ping': 'no',
+        'tcp_ping_dest_ports': 'built-in',
+        'icmp_unreach_means_host_down': 'no',
+        'icmp_ping_retries': '2',
+        'scan_network_printers': 'no',
+        'scan_netware_hosts': 'no',
+        'scan_ot_devices': 'no',
+        'wol_mac_addresses': '',
+        'wol_wait_time': '5',
+        'unscanned_closed': 'no',
+        'portscan_range': 'default',
+        'ssh_netstat_scanner': 'yes',
+        'wmi_netstat_scanner': 'yes',
+        'snmp_scanner': 'yes',
+        'only_portscan_if_enum_failed': 'yes',
+        'verify_open_ports': 'no',
+        'tcp_scanner': 'no',
+        'syn_scanner': 'yes',
+        'udp_scanner': 'no',
+        'tcp_firewall_detection': 'Automatic (normal)',
+        'syn_firewall_detection': 'Automatic (normal)',
+        'svc_detection_on_all_ports': 'yes',
+        'detect_ssl': 'yes',
+        'ssl_prob_ports': 'All ports',
+        'dtls_prob_ports': 'None',
+        'cert_expiry_warning_days': '60',
+        'enumerate_all_ciphers': 'yes',
+        'check_crl': 'no',
+        'report_paranoia': 'Normal',
+        'thorough_tests': 'yes',
+        'av_grace_period': '0',
+        'smtp_domain': 'example.com',
+        'smtp_from': 'nobody@example.com',
+        'smtp_to': 'postmaster@[AUTO_REPLACED_IP]',
+        'provided_creds_only': 'yes',
+        'test_default_oracle_accounts': 'no',
+        'hydra_always_enable': 'no',
+        'hydra_logins_file': '',
+        'hydra_passwords_file': '',
+        'hydra_parallel_tasks': '16',
+        'hydra_timeout': '30',
+        'hydra_empty_passwords': 'yes',
+        'hydra_login_as_pw': 'yes',
+        'hydra_exit_on_success': 'no',
+        'hydra_add_other_accounts': 'yes',
+        'hydra_postgresql_db_name': '',
+        'hydra_client_id': '',
+        'hydra_win_account_type': 'Local accounts',
+        'hydra_win_pw_as_hash': 'no',
+        'hydra_cisco_logon_pw': '',
+        'hydra_web_page': '',
+        'hydra_proxy_test_site': '',
+        'hydra_ldap_dn': '',
+        'scan_malware': 'no',
+        'disable_dns_resolution': 'no',
+        'win_known_bad_hashes': '',
+        'win_known_good_hashes': '',
+        'host_whitelist': '',
+        'enable_file_scanning': 'no',
+        'enable_filescan_systemroot': 'no',
+        'enable_filescan_programfiles': 'no',
+        'enable_filescan_programfilesx86': 'no',
+        'enable_filescan_programdata': 'no',
+        'enable_filescan_userprofiles': 'no',
+        'filescan_custom_dir': '',
+        'yarascan_rules_file': '',
+        'modbus_start_reg': '0',
+        'modbus_end_reg': '16',
+        'start_cotp_tsap': '8',
+        'stop_cotp_tsap': '8',
+        'scan_webapps': 'no',
+        'user_agent_string': 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0)',
+        'webcrawler_start_page': '/',
+        'webcrawl_exclude_regex': '/server_privileges\\.php|logout',
+        'webcrawler_max_pages': '1000',
+        'webcrawl_max_depth': '6',
+        'webcrawl_follow_dynamic_pages': 'no',
+        'generic_webapp_tests': 'no',
+        'abort_generic_webapp_if_login_fails': 'no',
+        'try_all_http_methods': 'no',
+        'http_param_pollution': 'no',
+        'test_embedded_web_servers': 'no',
+        'combo_arg_values': 'one value',
+        'stop_at_first_flaw': 'per CGI',
+        'url_for_rfi': 'http://rfi.nessus.org/rfi.txt',
+        'generic_webapp_tests_max_time': '5',
+        'request_windows_domain_info': 'no',
+        'samr_enumeration': 'yes',
+        'adsi_query': 'yes',
+        'wmi_query': 'yes',
+        'rid_brute_forcing': 'no',
+        'enum_domain_users_start_uid': '1000',
+        'enum_domain_users_end_uid': '1200',
+        'enum_local_users_start_uid': '1000',
+        'enum_local_users_end_uid': '1200',
+        'report_verbosity': 'Normal',
+        'report_superseded_patches': 'yes',
+        'silent_dependencies': 'yes',
+        'reverse_lookup': 'no',
+        'log_live_hosts': 'no',
+        'display_unreachable_hosts': 'no',
+        'display_unicode_characters': 'no',
+        'generateXCCDFResults': 'no',
+        'snmp_port': '161',
+        'additional_snmp_port1': '161',
+        'additional_snmp_port2': '161',
+        'additional_snmp_port3': '161',
+        'ssh_known_hosts': '',
+        'ssh_port': '22',
+        'ssh_client_banner': 'OpenSSH_5.0',
+        'attempt_least_privilege': 'no',
+        'never_send_win_creds_in_the_clear': 'yes',
+        'dont_use_ntlmv1': 'yes',
+        'start_remote_registry': 'no',
+        'enable_admin_shares': 'no',
+        'start_server_service': 'no',
+        'patch_audit_over_telnet': 'no',
+        'patch_audit_over_rsh': 'no',
+        'patch_audit_over_rexec': 'no',
+        'http_login_method': 'POST',
+        'http_reauth_delay': '0',
+        'http_login_max_redir': '0',
+        'http_login_invert_auth_regex': 'no',
+        'http_login_auth_regex_on_headers': 'no',
+        'http_login_auth_regex_nocase': 'no',
+        'snmpv3': [],
+        'mongodb': [],
+        'adsi': [],
+        'f5': [],
+        'ibm_iseries': [],
+        'rhev': [],
+        'netapp_api': [],
+        'panos': [],
+        'vmware_esx': [],
+        'vmware_vcenter': [],
+        'x509': [],
+        'telnet': [],
+        'nntp': [],
+        'ftp': [],
+        'pop2': [],
+        'pop3': [],
+        'imap': [],
+        'ipmi': [],
+        'http': [],
+        'k1000': [],
+        'ibm_tem': [],
+        'satellite': [],
+        'satellite_6': [],
+        'sccm': [],
+        'wsus': [],
+        'altiris': [],
+    },
+    'families': [
+        {
+            'id': 24,
+            'state': 'unlocked',
+        },
+        {
+            'id': 28,
+            'state': 'locked',
+            'plugins': [
+                {
+                    'id': 10031,
+                },
+                {
+                    'id': 10158,
+                },
+                {
+                    'id': 10215,
+                },
+                {
+                    'id': 10223,
+                },
+                {
+                    'id': 10226,
+                },
+                {
+                    'id': 10227,
+                },
+                {
+                    'id': 10239,
+                },
+                {
+                    'id': 10251,
+                },
+                {
+                    'id': 10437,
+                },
+                {
+                    'id': 10544,
+                },
+                {
+                    'id': 10950,
+                },
+                {
+                    'id': 11021,
+                },
+                {
+                    'id': 11058,
+                },
+                {
+                    'id': 11353,
+                },
+                {
+                    'id': 11356,
+                },
+                {
+                    'id': 11357,
+                },
+                {
+                    'id': 11358,
+                },
+                {
+                    'id': 11418,
+                },
+                {
+                    'id': 11420,
+                },
+                {
+                    'id': 11800,
+                },
+                {
+                    'id': 11899,
+                },
+                {
+                    'id': 12237,
+                },
+                {
+                    'id': 12238,
+                },
+                {
+                    'id': 15984,
+                },
+                {
+                    'id': 20759,
+                },
+                {
+                    'id': 31683,
+                },
+                {
+                    'id': 42255,
+                },
+                {
+                    'id': 42256,
+                },
+                {
+                    'id': 48264,
+                },
+                {
+                    'id': 53333,
+                },
+                {
+                    'id': 53334,
+                },
+                {
+                    'id': 53335,
+                },
+                {
+                    'id': 54586,
+                },
+                {
+                    'id': 94675,
+                },
+                {
+                    'id': 103532,
+                },
+                {
+                    'id': 156559,
+                },
+            ],
+        }
+        
+    ],
+    'removePrefs': [],
+}
+
+    sc.createPolicy(payload)
+            
+if __name__=="__main__":
+    main()
